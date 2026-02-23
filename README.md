@@ -339,3 +339,4 @@ Replace the placeholder JPEGs in `public/images/` with your actual photos. Recom
 ## 📝 License
 
 MIT — Replace with your actual license before going public.
+"# agro-group" 
