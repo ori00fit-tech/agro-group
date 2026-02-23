@@ -4,8 +4,8 @@ pages_build_output_dir = "dist"
 
 [[kv_namespaces]]
 binding = "RATE_LIMIT_KV"
-id = "PLACEHOLDER_KV_ID"
-preview_id = "PLACEHOLDER_KV_PREVIEW_ID"
+id = "f480981a52364b24b02191f95ef16d44"
+preview_id = "f480981a52364b24b02191f95ef16d44"
 
 [vars]
 CONTACT_EMAIL = "contact@agro-group.com"
