@@ -1,0 +1,101 @@
+---
+import Tag from './Tag.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  excerpt: string;
+  coverImage?: string;
+  tags?: string[];
+  meta?: string;
+  date?: string;
+  type?: 'news' | 'activity' | 'career';
+}
+
+const {
+  href,
+  title,
+  excerpt,
+  coverImage,
+  tags = [],
+  meta,
+  date,
+  type = 'news',
+} = Astro.props;
+
+const formattedDate = date
+  ? new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(date))
+  : null;
+---
+
+<article class="group flex flex-col bg-white rounded-2xl overflow-hidden border border-neutral-100 hover:border-brand-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+  {coverImage && (
+    <a href={href} class="block overflow-hidden aspect-[4/3]" tabindex="-1">
+      <img
+        src={coverImage}
+        alt=""
+        width="400"
+        height="300"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+  )}
+
+  <div class="flex flex-col flex-1 p-6">
+    {/* Tags */}
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-1.5 mb-3">
+        {tags.slice(0, 2).map((tag) => (
+          <Tag label={tag} color="green" />
+        ))}
+      </div>
+    )}
+
+    {/* Meta (date or location) */}
+    {(formattedDate || meta) && (
+      <p class="text-xs text-neutral-400 mb-2 flex items-center gap-1.5">
+        {formattedDate && (
+          <>
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {formattedDate}
+          </>
+        )}
+        {meta && <span>{meta}</span>}
+      </p>
+    )}
+
+    <h3 class="font-display text-xl font-semibold text-neutral-900 mb-3 leading-snug group-hover:text-brand-700 transition-colors">
+      <a href={href} class="stretched-link">
+        {title}
+      </a>
+    </h3>
+
+    <p class="text-neutral-500 text-sm leading-relaxed flex-1 line-clamp-3">
+      {excerpt}
+    </p>
+
+    <div class="mt-5 pt-4 border-t border-neutral-50 flex items-center justify-between">
+      <span class="text-sm font-medium text-brand-600 group-hover:text-brand-700 flex items-center gap-1.5 transition-colors">
+        Lire la suite
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .stretched-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  article {
+    position: relative;
+  }
+</style>

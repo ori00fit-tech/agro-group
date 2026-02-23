@@ -1,0 +1,78 @@
+---
+const kpis = [
+  { value: 560,   suffix: 'M €',  label: "Chiffre d'Affaires" },
+  { value: 3500,  suffix: '+',    label: 'Collaborateurs répartis sur deux continents' },
+  { value: 12,    suffix: '',     label: 'Pays d\'export' },
+  { value: 280,   suffix: 'k T', label: 'Tonnes produites par an' },
+  { value: 25,    suffix: '+',   label: "Années d'expertise agricole" },
+  { value: 40,    suffix: '',    label: 'Certifications internationales' },
+];
+---
+
+<!-- Azura style: big numbers on cream background, large photo on right -->
+<section class="overflow-hidden" style="background-color: var(--cream);">
+  <div class="max-w-8xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-0">
+
+      <!-- Left: text + KPIs -->
+      <div class="py-20 lg:py-28 pr-0 lg:pr-16 reveal">
+        <span class="eyebrow">Nos chiffres clés</span>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-3 text-balance">
+          Cultiver <span class="italic font-normal">le bon pour tous</span><br/>depuis 1998
+        </h2>
+        <div class="hr-green mb-10"></div>
+
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-2 gap-x-8 gap-y-10">
+          {kpis.map((kpi) => (
+            <div class="kpi-item">
+              <div class="font-display text-4xl md:text-5xl font-semibold leading-none mb-2" style="color: var(--green);">
+                <span class="kpi-count" data-target={kpi.value}>0</span>
+                <span>{kpi.suffix}</span>
+              </div>
+              <p class="text-sm text-gray-500 leading-snug max-w-[14ch]">{kpi.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <p class="text-xs text-gray-400 mt-10">* Chiffres annuels — Groupe Agro Group 2024</p>
+      </div>
+
+      <!-- Right: full-height image -->
+      <div class="reveal-right hidden lg:block relative min-h-[600px]">
+        <img
+          src="/images/about-mission.jpg"
+          alt="Nos équipes"
+          class="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <!-- Vertical label -->
+        <div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 rotate-[-90deg] whitespace-nowrap">
+          <span class="text-xs tracking-[.25em] uppercase font-medium text-white/50">Excellence · Durabilité · Innovation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const counters = document.querySelectorAll<HTMLElement>('.kpi-count');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target as HTMLElement;
+      const target = parseInt(el.dataset.target ?? '0', 10);
+      const duration = 1800;
+      const steps = 60;
+      const inc = target / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + inc, target);
+        el.textContent = Math.floor(current).toLocaleString('fr-FR');
+        if (current >= target) clearInterval(timer);
+      }, duration / steps);
+      observer.unobserve(el);
+    });
+  }, { threshold: .3 });
+  counters.forEach(el => observer.observe(el));
+</script>

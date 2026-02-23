@@ -1,0 +1,111 @@
+---
+---
+<!-- Azura-style Hero: fullscreen image slider with editorial text overlay -->
+<section class="relative w-full h-screen min-h-[600px] overflow-hidden">
+
+  <!-- Slides -->
+  <div id="hero-slides" class="absolute inset-0">
+    {[
+      { img: '/images/hero-bg.jpg',   caption: 'Excellence agricole depuis 1998' },
+      { img: '/images/hero-2.jpg',    caption: 'Des produits cultivés avec soin' },
+      { img: '/images/hero-3.jpg',    caption: 'Engagés pour une agriculture durable' },
+    ].map((slide, i) => (
+      <div
+        class={`hero-slide absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`}
+        data-index={i}
+      >
+        <img
+          src={slide.img}
+          alt=""
+          class="w-full h-full object-cover"
+          fetchpriority={i === 0 ? 'high' : 'auto'}
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Content -->
+  <div class="relative h-full flex flex-col justify-end pb-20 lg:pb-28">
+    <div class="max-w-8xl mx-auto px-6 lg:px-10 w-full">
+      <div class="max-w-3xl">
+
+        <!-- Label -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-8 h-px bg-white/60"></div>
+          <span class="text-white/70 text-xs tracking-[.2em] uppercase font-medium">Agro Group — Maroc</span>
+        </div>
+
+        <!-- Headline — Azura style: large serif, italic accent -->
+        <h1 class="font-display font-semibold text-white leading-[1.08] mb-8 text-balance">
+          <span class="block text-5xl md:text-6xl lg:text-[5.5rem]">Au service d'une</span>
+          <span class="block text-5xl md:text-6xl lg:text-[5.5rem] italic font-normal text-white/85">alimentation saine,</span>
+          <span class="block text-5xl md:text-6xl lg:text-[5.5rem]">savoureuse</span>
+          <span class="block text-5xl md:text-6xl lg:text-[5.5rem] italic font-normal text-white/85">&amp; responsable</span>
+        </h1>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4">
+          <a href="/activities" class="btn-primary">
+            Découvrir nos activités
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a href="/about" class="btn-outline">
+            En savoir plus
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide controls -->
+  <div class="absolute bottom-8 right-8 lg:bottom-10 lg:right-12 flex items-center gap-3 z-10">
+    {[0,1,2].map((i) => (
+      <button
+        class="hero-dot w-2 h-2 rounded-full transition-all duration-300 bg-white/40 hover:bg-white/80"
+        data-slide={i}
+        aria-label={`Slide ${i+1}`}
+      ></button>
+    ))}
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
+    <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/50 to-white/20 animate-pulse"></div>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll<HTMLElement>('.hero-slide');
+  const dots   = document.querySelectorAll<HTMLElement>('.hero-dot');
+  let current  = 0;
+  let timer: ReturnType<typeof setInterval>;
+
+  const goTo = (n: number) => {
+    slides[current].classList.replace('opacity-100','opacity-0');
+    dots[current].classList.replace('bg-white/80','bg-white/40');
+    dots[current].style.width = '8px';
+
+    current = n % slides.length;
+
+    slides[current].classList.replace('opacity-0','opacity-100');
+    dots[current].classList.replace('bg-white/40','bg-white/80');
+    dots[current].style.width = '24px';
+  };
+
+  // Init first dot
+  dots[0].classList.replace('bg-white/40','bg-white/80');
+  (dots[0] as HTMLElement).style.width = '24px';
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { clearInterval(timer); goTo(i); timer = setInterval(next, 5000); });
+  });
+
+  const next = () => goTo(current + 1);
+  timer = setInterval(next, 5000);
+</script>

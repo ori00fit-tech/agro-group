@@ -1,0 +1,77 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+
+const activities = await getCollection('activities');
+const sorted = activities.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Nos Activités"
+  description="Découvrez les 5 pôles d'activité d'Agro Group : horticulture, herbes aromatiques, aquaculture, logistique et R&D."
+  breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Activités', url: '/activities' }]}
+>
+  <!-- Hero -->
+  <div class="relative bg-neutral-900 pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/activities-hero.jpg" alt="" class="w-full h-full object-cover opacity-30" />
+      <div class="absolute inset-0 bg-gradient-to-b from-neutral-900/70 to-neutral-900"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Accueil', href: '/' }, { label: 'Activités' }]} light={true} />
+      <h1 class="font-display text-5xl md:text-7xl font-semibold text-white mt-6 leading-tight">
+        Nos Activités
+      </h1>
+      <p class="text-white/60 text-xl mt-4 max-w-2xl">
+        Cinq métiers complémentaires, une vision commune : l'excellence agroalimentaire.
+      </p>
+    </div>
+  </div>
+
+  <!-- Activities grid -->
+  <section class="section-py bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-10 stagger">
+        {sorted.map((activity, i) => (
+          <article class="reveal group overflow-hidden rounded-3xl border border-neutral-100 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 bg-white">
+            <div class="aspect-[16/9] overflow-hidden">
+              <img
+                src={activity.data.coverImage}
+                alt={activity.data.title}
+                width="800"
+                height="450"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="p-8">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-3xl">{activity.data.icon}</span>
+                <h2 class="font-display text-2xl font-semibold text-neutral-900">
+                  {activity.data.title}
+                </h2>
+              </div>
+              <p class="text-neutral-500 leading-relaxed mb-6">{activity.data.excerpt}</p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                {activity.data.tags.map((tag) => (
+                  <span class="text-xs px-3 py-1.5 bg-brand-50 text-brand-700 rounded-full border border-brand-100 font-medium">{tag}</span>
+                ))}
+              </div>
+              <a
+                href={`/activities/${activity.slug}`}
+                class="inline-flex items-center gap-2 text-brand-700 font-medium hover:gap-3 transition-all"
+              >
+                En savoir plus
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

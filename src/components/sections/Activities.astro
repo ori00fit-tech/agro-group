@@ -1,0 +1,92 @@
+---
+const activities = [
+  { title: 'Tomates & Légumes',      excerpt: 'Leader en production de tomates premium — 280 000 T/an sur 3 200 ha de serres modernes.',   href: '/activities/tomates-legumes',       img: '/images/activities/tomatoes.jpg',    label: 'Horticulture' },
+  { title: 'Herbes Aromatiques',     excerpt: '30 espèces fraîches et séchées, conditionnées et exportées vers 12 pays.',                   href: '/activities/herbes-aromatiques',    img: '/images/activities/herbs.jpg',       label: 'Aromatiques' },
+  { title: 'Aquaculture',            excerpt: 'Daurade, bar, turbot élevés dans les eaux atlantiques d\'exception de Dakhla et Agadir.',    href: '/activities/aquaculture',           img: '/images/activities/aquaculture.jpg', label: 'Aquaculture' },
+  { title: 'Logistique & Transport', excerpt: 'Flotte frigorifique propre + réseau de 8 entrepôts pour une supply chain irréprochable.',    href: '/activities/logistique-transport',  img: '/images/activities/logistics.jpg',   label: 'Transport' },
+  { title: 'Recherche & Développement', excerpt: '85 chercheurs, 12 brevets, 8% du CA investi en innovation agricole.',                   href: '/activities/recherche-developpement',img: '/images/activities/rd.jpg',         label: 'Innovation' },
+];
+---
+<section class="section-py" style="background-color: var(--cream);">
+  <div class="max-w-8xl mx-auto px-6 lg:px-10">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 reveal">
+      <div>
+        <span class="eyebrow">Nos Activités</span>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-gray-900 max-w-xl leading-tight text-balance">
+          Un portefeuille diversifié <span class="italic font-normal">au service de l'alimentation</span>
+        </h2>
+      </div>
+      <a href="/activities" class="link-arrow flex-shrink-0">
+        Toutes les activités
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Grid — Azura style: large featured + smaller cards -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 stagger">
+
+      <!-- Featured large card -->
+      <article class="reveal md:col-span-7 group relative overflow-hidden" style="aspect-ratio: 4/3;">
+        <img src={activities[0].img} alt={activities[0].title}
+          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute inset-0 p-8 flex flex-col justify-end">
+          <span class="tag-pill mb-3 self-start">{activities[0].label}</span>
+          <h3 class="font-display text-2xl md:text-3xl font-semibold text-white mb-2">{activities[0].title}</h3>
+          <p class="text-white/70 text-sm leading-relaxed mb-4 max-w-md line-clamp-2">{activities[0].excerpt}</p>
+          <a href={activities[0].href} class="link-arrow text-white border-white/60 hover:border-white self-start" style="color:white;">
+            Découvrir
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Right column: 2 stacked -->
+      <div class="md:col-span-5 grid grid-rows-2 gap-4">
+        {activities.slice(1,3).map((a) => (
+          <article class="reveal group relative overflow-hidden" style="aspect-ratio: 16/9;">
+            <img src={a.img} alt={a.title}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent"></div>
+            <div class="absolute inset-0 p-6 flex flex-col justify-end">
+              <span class="tag-pill mb-2 self-start">{a.label}</span>
+              <h3 class="font-display text-xl font-semibold text-white mb-2">{a.title}</h3>
+              <a href={a.href} class="link-arrow self-start" style="color:white; border-color:rgba(255,255,255,.6);">
+                Découvrir
+                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Bottom row: 2 cards -->
+      {activities.slice(3).map((a) => (
+        <article class="reveal md:col-span-6 group relative overflow-hidden" style="aspect-ratio: 16/8;">
+          <img src={a.img} alt={a.title}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent"></div>
+          <div class="absolute inset-0 p-7 flex flex-col justify-end">
+            <span class="tag-pill mb-2 self-start">{a.label}</span>
+            <h3 class="font-display text-xl font-semibold text-white mb-2">{a.title}</h3>
+            <p class="text-white/65 text-sm mb-4 line-clamp-1">{a.excerpt}</p>
+            <a href={a.href} class="link-arrow self-start" style="color:white; border-color:rgba(255,255,255,.6);">
+              Découvrir
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

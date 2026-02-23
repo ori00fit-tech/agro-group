@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import Tag from '@/components/ui/Tag.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const activities = await getCollection('activities');
+  return activities.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.excerpt}
+  image={entry.data.coverImage}
+  type="article"
+  breadcrumbs={[
+    { name: 'Accueil', url: '/' },
+    { name: 'Activités', url: '/activities' },
+    { name: entry.data.title, url: `/activities/${entry.slug}` },
+  ]}
+>
+  <!-- Hero -->
+  <div class="relative h-[50vh] min-h-[400px] overflow-hidden">
+    <img
+      src={entry.data.coverImage}
+      alt={entry.data.title}
+      class="w-full h-full object-cover"
+      fetchpriority="high"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/50 to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col justify-end pb-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <Breadcrumbs
+          items={[
+            { label: 'Accueil', href: '/' },
+            { label: 'Activités', href: '/activities' },
+            { label: entry.data.title },
+          ]}
+          light={true}
+        />
+        <div class="flex items-center gap-3 mt-4">
+          <span class="text-4xl">{entry.data.icon}</span>
+          <h1 class="font-display text-4xl md:text-6xl font-semibold text-white">{entry.data.title}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <article class="section-py bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        {entry.data.tags.map((tag) => <Tag label={tag} color="green" size="md" />)}
+      </div>
+
+      <!-- MDX Content -->
+      <div class="prose prose-lg prose-neutral max-w-none
+        prose-headings:font-display prose-headings:text-neutral-900
+        prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
+        prose-a:text-brand-700 prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-neutral-900
+        prose-blockquote:border-brand-500 prose-blockquote:text-neutral-600
+        prose-th:bg-neutral-50 prose-th:text-neutral-800">
+        <Content />
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-12 pt-8 border-t border-neutral-100">
+        <a href="/activities" class="inline-flex items-center gap-2 text-brand-700 font-medium hover:gap-3 transition-all">
+          <svg class="w-5 h-5 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          Toutes les activités
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

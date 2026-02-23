@@ -1,0 +1,44 @@
+---
+---
+<!-- Azura Careers CTA: dark green band, full width -->
+<section class="relative overflow-hidden" style="background-color: var(--green-dark);">
+  <div class="absolute inset-0">
+    <img src="/images/careers-bg.jpg" alt="" class="w-full h-full object-cover opacity-15" loading="lazy"/>
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,61,37,.97) 0%, rgba(45,106,63,.85) 100%);"></div>
+  </div>
+
+  <div class="relative max-w-8xl mx-auto px-6 lg:px-10 py-24 lg:py-32">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <span class="text-xs font-semibold tracking-[.2em] uppercase mb-4 block" style="color: rgba(255,255,255,.55);">Carrières</span>
+        <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight mb-6 text-balance">
+          Nous rejoindre
+        </h2>
+        <div class="w-12 h-px bg-white/30 mb-6"></div>
+        <p class="text-white/65 text-base leading-relaxed max-w-md mb-8">
+          Rejoignez une équipe de 3 500 passionnés qui façonnent l'agriculture de demain. Nous recrutons des talents dans tous nos métiers, avec une priorité donnée au recrutement local.
+        </p>
+        <a href="/careers" class="btn-primary" style="background: white; color: var(--green-dark);">
+          Voir toutes les offres
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="reveal-right grid grid-cols-2 gap-4">
+        {[
+          { v: '3 500+', l: 'Collaborateurs' },
+          { v: '95%',    l: 'Emplois locaux' },
+          { v: '250k h', l: 'Formation / an' },
+          { v: '5',      l: 'Pôles de métiers' },
+        ].map((s) => (
+          <div class="p-6 border border-white/10 hover:border-white/25 transition-colors">
+            <p class="font-display text-3xl font-semibold text-white mb-1">{s.v}</p>
+            <p class="text-white/50 text-sm">{s.l}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

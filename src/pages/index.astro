@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/sections/Hero.astro';
+import AboutTeaser from '@/components/sections/AboutTeaser.astro';
+import Activities from '@/components/sections/Activities.astro';
+import KeyFigures from '@/components/sections/KeyFigures.astro';
+import Commitments from '@/components/sections/Commitments.astro';
+import LatestNews from '@/components/sections/LatestNews.astro';
+import CareersCTA from '@/components/sections/CareersCTA.astro';
+---
+
+<BaseLayout
+  title="Agro Group"
+  description="Agro Group — Leader marocain de l'agrobusiness. Excellence agricole, engagement durable. Tomates, herbes aromatiques, aquaculture, logistique et R&D."
+  image="/images/og-default.jpg"
+  breadcrumbs={[{ name: 'Accueil', url: '/' }]}
+>
+  <Hero />
+  <AboutTeaser />
+  <Activities />
+  <KeyFigures />
+  <Commitments />
+  <LatestNews />
+  <CareersCTA />
+</BaseLayout>

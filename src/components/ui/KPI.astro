@@ -1,0 +1,57 @@
+---
+interface Props {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: string;
+  light?: boolean;
+}
+
+const { value, suffix = '', prefix = '', label, light = false } = Astro.props;
+---
+
+<div class="text-center kpi-item">
+  <div class={`font-display text-5xl md:text-6xl font-semibold mb-2 ${light ? 'text-white' : 'text-brand-700'}`}>
+    <span class="kpi-prefix">{prefix}</span>
+    <span class="kpi-count" data-target={value}>0</span>
+    <span class="kpi-suffix">{suffix}</span>
+  </div>
+  <p class={`text-sm font-medium uppercase tracking-widest ${light ? 'text-white/60' : 'text-neutral-500'}`}>
+    {label}
+  </p>
+</div>
+
+<script>
+  // Animated counter for KPIs
+  const counters = document.querySelectorAll<HTMLElement>('.kpi-count');
+
+  const animateCounter = (el: HTMLElement) => {
+    const target = parseInt(el.dataset.target ?? '0', 10);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.floor(current).toLocaleString('fr-FR');
+    }, 16);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  counters.forEach((el) => observer.observe(el));
+</script>

@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import Card from '@/components/ui/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = await getCollection('news');
+const sorted = allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<BaseLayout
+  title="Actualités"
+  description="Toutes les actualités d'Agro Group : innovations, partenariats, certifications et événements."
+  breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Actualités', url: '/news' }]}
+>
+  <!-- Hero -->
+  <div class="bg-neutral-900 pt-32 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Accueil', href: '/' }, { label: 'Actualités' }]} light={true} />
+      <h1 class="font-display text-5xl md:text-6xl font-semibold text-white mt-6">Actualités</h1>
+      <p class="text-white/50 text-lg mt-3">Suivez les dernières nouvelles du groupe.</p>
+    </div>
+  </div>
+
+  <!-- News grid -->
+  <section class="section-py bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Featured post -->
+      {sorted[0] && (
+        <article class="reveal mb-12 group grid md:grid-cols-2 gap-8 bg-white rounded-3xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div class="overflow-hidden aspect-[16/10] md:aspect-auto">
+            <img
+              src={sorted[0].data.coverImage}
+              alt={sorted[0].data.title}
+              width="700"
+              height="500"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              loading="eager"
+            />
+          </div>
+          <div class="flex flex-col justify-center p-8 md:p-10">
+            <div class="flex gap-2 flex-wrap mb-4">
+              {sorted[0].data.tags.slice(0, 2).map((tag) => (
+                <span class="text-xs px-3 py-1.5 bg-brand-50 text-brand-700 rounded-full border border-brand-100 font-medium">{tag}</span>
+              ))}
+              <span class="text-xs px-3 py-1.5 bg-earth-50 text-earth-700 rounded-full border border-earth-100 font-medium">À la une</span>
+            </div>
+            <p class="text-neutral-400 text-sm mb-3">
+              {new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(sorted[0].data.date))}
+            </p>
+            <h2 class="font-display text-3xl font-semibold text-neutral-900 mb-4 group-hover:text-brand-700 transition-colors">
+              {sorted[0].data.title}
+            </h2>
+            <p class="text-neutral-500 leading-relaxed mb-6">{sorted[0].data.excerpt}</p>
+            <a href={`/news/${sorted[0].slug}`} class="inline-flex items-center gap-2 text-brand-700 font-medium hover:gap-3 transition-all">
+              Lire l'article
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      )}
+
+      <!-- Rest of posts -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger">
+        {sorted.slice(1).map((post) => (
+          <div class="reveal">
+            <Card
+              href={`/news/${post.slug}`}
+              title={post.data.title}
+              excerpt={post.data.excerpt}
+              coverImage={post.data.coverImage}
+              tags={post.data.tags}
+              date={post.data.date}
+              type="news"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

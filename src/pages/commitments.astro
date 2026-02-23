@@ -1,0 +1,107 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Nos Engagements RSE"
+  description="Découvrez la politique de responsabilité sociétale d'Agro Group : qualité, durabilité environnementale et capital humain."
+  breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'Engagements', url: '/commitments' }]}
+>
+  <!-- Hero -->
+  <div class="relative bg-brand-900 pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/commitments-hero.jpg" alt="" class="w-full h-full object-cover opacity-25" />
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-900/70 to-brand-900"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Accueil', href: '/' }, { label: 'Engagements RSE' }]} light={true} />
+      <h1 class="font-display text-5xl md:text-7xl font-semibold text-white mt-6 leading-tight">
+        Nos Engagements
+      </h1>
+      <p class="text-white/60 text-xl mt-4 max-w-2xl">
+        Une agriculture responsable au service des générations futures.
+      </p>
+    </div>
+  </div>
+
+  <!-- Green Horizon 2030 -->
+  <section class="section-py bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+          <p class="text-brand-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Stratégie</p>
+          <h2 class="font-display text-4xl md:text-5xl font-semibold text-neutral-900 mb-6 leading-tight">Green Horizon 2030</h2>
+          <div class="w-12 h-0.5 bg-brand-600 mb-6"></div>
+          <p class="text-neutral-500 leading-relaxed mb-4">
+            Notre feuille de route RSE, baptisée <strong class="text-neutral-800">Green Horizon 2030</strong>, définit des objectifs ambitieux et mesurables sur trois axes stratégiques : l'environnement, le social et la gouvernance.
+          </p>
+          <p class="text-neutral-500 leading-relaxed mb-8">
+            Elle s'inscrit dans les Objectifs de Développement Durable (ODD) des Nations Unies et les engagements de l'Accord de Paris sur le Climat. Chaque année, nous publions un rapport RSE audité par Bureau Veritas.
+          </p>
+          <div class="grid grid-cols-2 gap-4">
+            {[
+              { target: '-40%', label: 'Émissions CO₂ d\'ici 2030', icon: '🌍' },
+              { target: '60%', label: 'Surfaces en agriculture bio', icon: '🌱' },
+              { target: '85%', label: 'Eau recyclée sur nos sites', icon: '💧' },
+              { target: '100%', label: 'Énergie renouvelable d\'ici 2028', icon: '☀️' },
+            ].map((obj) => (
+              <div class="p-4 bg-brand-50 rounded-2xl border border-brand-100">
+                <span class="text-2xl mb-2 block">{obj.icon}</span>
+                <p class="font-display text-2xl font-semibold text-brand-700">{obj.target}</p>
+                <p class="text-xs text-neutral-600 mt-1">{obj.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="reveal-right">
+          <img src="/images/commitments-env.jpg" alt="Environnement" class="rounded-3xl w-full aspect-square object-cover shadow-2xl" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 pillars detailed -->
+  <section class="section-py bg-neutral-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <p class="text-brand-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Nos 3 piliers</p>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-neutral-900">Un engagement global et concret</h2>
+      </div>
+      <div class="space-y-8 stagger">
+        {[
+          {
+            num: '01', title: 'Qualité & Traçabilité', color: 'brand',
+            content: 'Nos 40 certifications internationales couvrent l\'ensemble de notre chaîne de production. Chaque produit est traçable de la semence à l\'assiette, via notre système informatique propriétaire AgroTrace™. En 2023, nous avons réalisé 12 000 analyses qualité sans aucun produit non-conforme rappelé sur le marché.',
+            certifs: ['GlobalG.A.P.', 'BRC Grade AA', 'ISO 22000', 'Agriculture Biologique', 'BAP 3★', 'MPS-A'],
+          },
+          {
+            num: '02', title: 'Durabilité Environnementale', color: 'brand',
+            content: 'En 2023, nous avons réduit notre consommation d\'eau de 22% grâce à nos systèmes d\'irrigation goutte-à-goutte pilotés par IA. Nos 3 fermes solaires couvrent 65% de nos besoins énergétiques. Zéro pesticides chimiques de synthèse sur 40% de nos surfaces. Nos déchets verts sont entièrement compostés et réutilisés.',
+            certifs: ['ISO 14001', 'Bilan Carbone® certifié', 'Programme ASC', 'Label Bas-Carbone'],
+          },
+          {
+            num: '03', title: 'Capital Humain & Social', color: 'earth',
+            content: '95% de nos recrutements sont locaux. Nous avons dispensé 250 000 heures de formation en 2023, investi 8M MAD dans la sécurité au travail, et lancé un programme de logement pour nos saisonniers. Notre taux de fréquence des accidents (LTIFR) est de 0,42 — bien en dessous de la moyenne sectorielle.',
+            certifs: ['OHSAS 18001', 'Indice Égalité F/H 88/100', 'Label RSE Maroc', 'UN Global Compact'],
+          },
+        ].map((pillar) => (
+          <div class="reveal bg-white rounded-3xl border border-neutral-100 overflow-hidden">
+            <div class="p-8 md:p-10">
+              <div class="flex items-start gap-6 mb-6">
+                <span class="font-display text-6xl font-semibold text-neutral-100 leading-none flex-shrink-0">{pillar.num}</span>
+                <h3 class="font-display text-3xl font-semibold text-neutral-900 mt-2">{pillar.title}</h3>
+              </div>
+              <p class="text-neutral-500 leading-relaxed mb-6 max-w-3xl">{pillar.content}</p>
+              <div class="flex flex-wrap gap-2">
+                {pillar.certifs.map((c) => (
+                  <span class="text-xs font-medium px-3 py-1.5 bg-brand-50 text-brand-700 rounded-full border border-brand-100">{c}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

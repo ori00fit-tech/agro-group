@@ -1,0 +1,90 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import Tag from '@/components/ui/Tag.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const news = await getCollection('news');
+  return news.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const formattedDate = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric', month: 'long', year: 'numeric',
+}).format(new Date(entry.data.date));
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.excerpt}
+  image={entry.data.coverImage}
+  type="article"
+  article={{
+    publishedTime: new Date(entry.data.date).toISOString(),
+    tags: entry.data.tags,
+  }}
+  breadcrumbs={[
+    { name: 'Accueil', url: '/' },
+    { name: 'Actualités', url: '/news' },
+    { name: entry.data.title, url: `/news/${entry.slug}` },
+  ]}
+>
+  <!-- Hero image -->
+  <div class="relative h-[50vh] min-h-[400px] overflow-hidden">
+    <img src={entry.data.coverImage} alt={entry.data.title} class="w-full h-full object-cover" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
+    <div class="absolute inset-0 flex flex-col justify-end pb-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <Breadcrumbs
+          items={[{ label: 'Accueil', href: '/' }, { label: 'Actualités', href: '/news' }, { label: entry.data.title }]}
+          light={true}
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Article content -->
+  <article class="section-py bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Meta -->
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        {entry.data.tags.map((tag) => <Tag label={tag} color="green" />)}
+        <span class="text-neutral-400 text-sm">•</span>
+        <time class="text-neutral-400 text-sm" datetime={entry.data.date}>{formattedDate}</time>
+        {entry.data.author && <span class="text-neutral-400 text-sm">• {entry.data.author}</span>}
+      </div>
+
+      <h1 class="font-display text-4xl md:text-5xl font-semibold text-neutral-900 mb-6 leading-tight">
+        {entry.data.title}
+      </h1>
+
+      <p class="text-xl text-neutral-500 leading-relaxed mb-10 pb-10 border-b border-neutral-100">
+        {entry.data.excerpt}
+      </p>
+
+      <div class="prose prose-lg prose-neutral max-w-none
+        prose-headings:font-display prose-headings:text-neutral-900
+        prose-a:text-brand-700 prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-neutral-900
+        prose-blockquote:border-brand-500 prose-blockquote:bg-brand-50 prose-blockquote:rounded-r-2xl prose-blockquote:py-1">
+        <Content />
+      </div>
+
+      <!-- Back -->
+      <div class="mt-12 pt-8 border-t border-neutral-100">
+        <a href="/news" class="inline-flex items-center gap-2 text-brand-700 font-medium hover:gap-3 transition-all">
+          <svg class="w-5 h-5 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          Toutes les actualités
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

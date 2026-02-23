@@ -1,0 +1,145 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import SectionTitle from '@/components/ui/SectionTitle.astro';
+
+const timeline = [
+  { year: '1998', event: 'Fondation d\'Agro Group à Agadir par la famille Benali — 120 ha de serres horticoles.' },
+  { year: '2003', event: 'Lancement de la division herbes aromatiques et première certification GlobalG.A.P.' },
+  { year: '2008', event: 'Ouverture de l\'unité logistique AgriTrans et premiers exports directs vers l\'Europe.' },
+  { year: '2014', event: 'Acquisition d\'un complexe aquacole à Agadir — diversification stratégique.' },
+  { year: '2018', event: 'Inauguration du Centre d\'Excellence R&D à Agadir, avec 85 chercheurs.' },
+  { year: '2021', event: 'Certification AB pour 40% des surfaces. Lancement de la gamme BioSelect.' },
+  { year: '2024', event: 'Annonce d\'un investissement de 120M MAD pour le complexe aquacole de Dakhla.' },
+];
+
+const team = [
+  { name: 'Mohammed Benali', role: 'Président Directeur Général', initials: 'MB' },
+  { name: 'Leila Fassi', role: 'Directrice Générale Déléguée', initials: 'LF' },
+  { name: 'Dr. Ahmed Bensalem', role: 'Directeur R&D', initials: 'AB' },
+  { name: 'Karim Tazi', role: 'Directeur Financier', initials: 'KT' },
+  { name: 'Nadia El Mansouri', role: 'Directrice RH & RSE', initials: 'NM' },
+  { name: 'Omar Chraibi', role: 'Directeur Logistique', initials: 'OC' },
+];
+---
+
+<BaseLayout
+  title="À propos"
+  description="Découvrez l'histoire, les valeurs et les équipes d'Agro Group — leader marocain de l'agrobusiness depuis 1998."
+  breadcrumbs={[{ name: 'Accueil', url: '/' }, { name: 'À propos', url: '/about' }]}
+>
+  <!-- Page hero -->
+  <div class="relative bg-brand-900 pt-32 pb-20 overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="/images/about-hero.jpg" alt="" class="w-full h-full object-cover opacity-20" />
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-900/80 to-brand-900"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs
+        items={[{ label: 'Accueil', href: '/' }, { label: 'À propos' }]}
+        light={true}
+      />
+      <h1 class="font-display text-5xl md:text-7xl font-semibold text-white mt-6 leading-tight">
+        Notre Histoire
+      </h1>
+      <p class="text-white/60 text-xl mt-4 max-w-2xl">
+        De 120 hectares de serres à un groupe agro-industriel intégré — 25 ans de passion et d'innovation.
+      </p>
+    </div>
+  </div>
+
+  <!-- Mission & Vision -->
+  <section class="section-py bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+          <SectionTitle
+            eyebrow="Notre raison d'être"
+            title="Nourrir le monde avec excellence"
+            subtitle="Notre mission est de produire des aliments de qualité supérieure, de manière responsable et durable, en créant de la valeur pour nos clients, collaborateurs et les communautés où nous opérons."
+          />
+          <div class="mt-8 space-y-4">
+            <div class="flex gap-4 p-5 rounded-2xl bg-brand-50 border border-brand-100">
+              <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-neutral-900 mb-1">Vision</h3>
+                <p class="text-neutral-500 text-sm">Être le groupe agro-alimentaire de référence en Méditerranée, reconnu pour la qualité de ses produits et l'exemplarité de ses pratiques durables, d'ici 2030.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 p-5 rounded-2xl bg-earth-50 border border-earth-100">
+              <div class="w-10 h-10 bg-earth-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-semibold text-neutral-900 mb-1">Valeurs</h3>
+                <p class="text-neutral-500 text-sm">Excellence • Intégrité • Responsabilité • Innovation • Respect de l'Humain et de l'Environnement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-right">
+          <img src="/images/about-mission.jpg" alt="Nos équipes" class="rounded-3xl w-full aspect-[4/5] object-cover shadow-2xl" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section-py bg-neutral-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 reveal">
+        <p class="text-brand-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Chronologie</p>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-neutral-900">25 ans d'histoire</h2>
+      </div>
+
+      <div class="relative">
+        <!-- Vertical line -->
+        <div class="absolute left-8 top-0 bottom-0 w-px bg-brand-200 hidden sm:block"></div>
+
+        <div class="space-y-10 stagger">
+          {timeline.map((item) => (
+            <div class="reveal flex gap-8 items-start">
+              <div class="hidden sm:flex flex-col items-center">
+                <div class="w-16 h-16 rounded-2xl bg-brand-600 flex items-center justify-center flex-shrink-0 z-10">
+                  <span class="font-display text-sm font-bold text-white">{item.year}</span>
+                </div>
+              </div>
+              <div class="flex-1 pb-8">
+                <span class="sm:hidden text-brand-600 font-display font-bold text-lg block mb-2">{item.year}</span>
+                <p class="text-neutral-600 leading-relaxed bg-white rounded-2xl p-5 shadow-sm border border-neutral-100">{item.event}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leadership team -->
+  <section class="section-py bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <p class="text-brand-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Direction</p>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold text-neutral-900">Notre Équipe Dirigeante</h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-8 stagger">
+        {team.map((member) => (
+          <div class="reveal text-center group">
+            <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center mx-auto mb-4 group-hover:from-brand-600 group-hover:to-brand-700 transition-all duration-300">
+              <span class="font-display text-2xl font-semibold text-brand-700 group-hover:text-white transition-colors">{member.initials}</span>
+            </div>
+            <h3 class="font-semibold text-neutral-900 mb-1">{member.name}</h3>
+            <p class="text-neutral-500 text-sm">{member.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

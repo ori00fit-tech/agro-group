@@ -1,0 +1,25 @@
+---
+interface Props {
+  label: string;
+  color?: 'green' | 'earth' | 'blue' | 'neutral';
+  size?: 'sm' | 'md';
+}
+
+const { label, color = 'green', size = 'sm' } = Astro.props;
+
+const colors = {
+  green: 'bg-brand-50 text-brand-700 border border-brand-100',
+  earth: 'bg-earth-50 text-earth-700 border border-earth-100',
+  blue: 'bg-blue-50 text-blue-700 border border-blue-100',
+  neutral: 'bg-neutral-100 text-neutral-600 border border-neutral-200',
+};
+
+const sizes = {
+  sm: 'text-xs px-2.5 py-1',
+  md: 'text-sm px-3 py-1.5',
+};
+---
+
+<span class={`inline-flex items-center rounded-full font-medium ${colors[color]} ${sizes[size]}`}>
+  {label}
+</span>

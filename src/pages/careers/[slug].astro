@@ -1,0 +1,90 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/ui/Breadcrumbs.astro';
+import Tag from '@/components/ui/Tag.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const jobs = await getCollection('careers');
+  return jobs.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.excerpt}
+  type="article"
+  breadcrumbs={[
+    { name: 'Accueil', url: '/' },
+    { name: 'Carrières', url: '/careers' },
+    { name: entry.data.title, url: `/careers/${entry.slug}` },
+  ]}
+>
+  <div class="bg-earth-900 pt-32 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Breadcrumbs items={[{ label: 'Accueil', href: '/' }, { label: 'Carrières', href: '/careers' }, { label: entry.data.title }]} light={true} />
+      <div class="flex flex-wrap gap-2 mt-6 mb-4">
+        <span class="px-3 py-1.5 text-sm bg-white/10 text-white/80 rounded-full border border-white/20">{entry.data.type}</span>
+        <span class="px-3 py-1.5 text-sm bg-white/10 text-white/80 rounded-full border border-white/20">{entry.data.department}</span>
+        <span class="px-3 py-1.5 text-sm bg-white/10 text-white/80 rounded-full border border-white/20 flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          </svg>
+          {entry.data.location}
+        </span>
+      </div>
+      <h1 class="font-display text-4xl md:text-5xl font-semibold text-white leading-tight">{entry.data.title}</h1>
+    </div>
+  </div>
+
+  <div class="section-py bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-2">
+          <div class="prose prose-lg prose-neutral max-w-none
+            prose-headings:font-display prose-headings:text-neutral-900
+            prose-h2:text-2xl prose-h3:text-xl
+            prose-a:text-brand-700
+            prose-strong:text-neutral-900
+            prose-ul:space-y-1">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Apply sidebar -->
+        <aside class="md:col-span-1">
+          <div class="sticky top-28 bg-neutral-50 rounded-3xl p-6 border border-neutral-100">
+            <h3 class="font-display text-xl font-semibold text-neutral-900 mb-4">Postuler</h3>
+            <div class="space-y-3 mb-6 text-sm text-neutral-600">
+              <p><strong class="text-neutral-900">Type :</strong> {entry.data.type}</p>
+              <p><strong class="text-neutral-900">Lieu :</strong> {entry.data.location}</p>
+              <p><strong class="text-neutral-900">Département :</strong> {entry.data.department}</p>
+            </div>
+            <a
+              href={`/contact?subject=Candidature — ${entry.data.title}`}
+              class="block text-center px-6 py-3.5 bg-brand-600 hover:bg-brand-500 text-white rounded-full font-medium transition-colors shadow-lg shadow-brand-900/20"
+            >
+              Envoyer ma candidature
+            </a>
+            <p class="text-xs text-neutral-400 text-center mt-3">Via le formulaire de contact</p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-neutral-100">
+        <a href="/careers" class="inline-flex items-center gap-2 text-brand-700 font-medium hover:gap-3 transition-all">
+          <svg class="w-5 h-5 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+          Toutes les offres
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

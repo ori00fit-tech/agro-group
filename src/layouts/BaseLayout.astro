@@ -1,0 +1,50 @@
+---
+import SEOHead from '@/components/SEOHead.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import type { SEOProps } from '@/lib/seo';
+import '@/styles/global.css';
+
+interface Props extends SEOProps {
+  lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr', ...seoProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <SEOHead {...seoProps} />
+  </head>
+  <body class="bg-white text-neutral-900 antialiased">
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <!-- Scroll reveal script -->
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+      );
+
+      document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
